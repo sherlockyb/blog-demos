@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<constant name="struts.multipart.maxSize" value="2097152000" />
+	<constant name="struts.action.excludePattern" value="/cpcnotice/.*,/notify/.*,/monitor/.*,/onestation/.*,/accountgrade/.*" />
+	<!--constant name="struts.action.excludePattern" value="/tool/excludeip/.*,/headMenuServlet,/codeImg"/-->
+
+	<package name="atlas-default" extends="struts-default">
+
+		<result-types>
+			<result-type name="json" class="com.googlecode.jsonplugin.JSONResult" />
+			<result-type name="ajaxValidateError" class="com.sogou.bizdev.platform.web.struts2.result.AjaxValidateErrorResult" />
+			<result-type name="bizExceptionResult" class="com.sogou.bizdev.common.exception.BizExceptionResult" />
+			<result-type name="securityExceptionResult" class="com.sogou.bizdev.securitycheck.exception.SecurityExceptionResult" />
+			<result-type name="generalExceptionResult" class="com.sogou.bizdev.platform.web.struts2.result.GeneralExceptionResult" />
+		</result-types>
+
+		<interceptors>
+			<interceptor name="exception" class="com.opensymphony.xwork2.interceptor.ExceptionMappingInterceptor">
+				<param name="logEnabled">false</param>
+				<param name="logLevel">info</param>
+			</interceptor>
+			<interceptor-stack name="baseStack">
+				<interceptor-ref name="exception" />
+				<interceptor-ref name="createSession" />
+				<interceptor-ref name="alias" />
+				<interceptor-ref name="params">
+					<param name="excludeParams">.*\\u0023.*</param>
+				</interceptor-ref>
+				<interceptor-ref name="servletConfig" />
+				<interceptor-ref name="prepare" />
+				<interceptor-ref name="i18n" />
+				<interceptor-ref name="chain" />
+				<interceptor-ref name="debugging" />
+				<interceptor-ref name="scopedModelDriven" />
+				<interceptor-ref name="modelDriven" />
+				<interceptor-ref name="fileUpload" />
+				<interceptor-ref name="checkbox" />
+				<interceptor-ref name="staticParams" />
+				<interceptor-ref name="conversionError" />
+				<interceptor-ref name="validation">
+					<param name="excludeMethods">input,back,cancel,browse</param>
+				</interceptor-ref>
+				<interceptor-ref name="workflow">
+					<param name="excludeMethods">input,back,cancel,browse</param>
+				</interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+
+		<default-interceptor-ref name="baseStack" />
+		<default-action-ref name="action_not_found"></default-action-ref>
+
+		<global-results>
+		    <result name="biz_exception" type="bizExceptionResult"/>
+		    <result name="security_exception" type="securityExceptionResult"/>
+			<result name="no_permission" type="dispatcher">/jsp/common/noPermission.jsp</result>
+			<result name="message" type="dispatcher">/jsp/common/message.jsp</result>
+			<result name="error" type="generalExceptionResult"/>
+		</global-results>
+
+		<global-exception-mappings>
+		    <exception-mapping exception="com.sogou.bizdev.securitycheck.exception.SecurityCheckException" result="security_exception" />
+		    <exception-mapping exception="com.sogou.bizdev.common.exception.BizException" result="biz_exception" />
+		    <exception-mapping exception="com.sogou.bizdev.atlas.platform.exception.NoPermissionException" result="no_permission" />
+			<exception-mapping exception="java.lang.Exception" result="error" />
+		</global-exception-mappings>
+		
+		<action name="action_not_found">
+			<result>/jsp/common/notfound.jsp</result>
+  		</action>
+		
+	</package>
+
+    <include file="com/sogou/bizdev/atlas/sample/conf/struts-sample.xml"></include>
+    <include file="com/sogou/bizdev/atlas/platform/web/conf/struts-platform.xml"></include>
+    <include file="com/sogou/bizdev/atlas/index/conf/struts-index.xml"></include>
+    <include file="com/sogou/bizdev/atlas/cpc/index/conf/struts-cpcadindex.xml"></include>
+    <include file="com/sogou/bizdev/atlas/cpc/overview/conf/struts-cpcadoverview.xml"></include>
+    <include file="com/sogou/bizdev/atlas/cpc/monitor/conf/struts-monitor.xml"></include>
+    <include file="com/sogou/bizdev/atlas/cpc/optimize/conf/struts-optimize.xml"></include>
+    <include file="com/sogou/bizdev/atlas/cpc/account/conf/struts-accountindex.xml"></include>
+    <include file="com/sogou/bizdev/atlas/cpc/notice/conf/struts-cpcnotice.xml"></include>
+    <include file="com/sogou/bizdev/atlas/cpc/pub/conf/struts-cpcpub.xml"></include>
+    <include file="com/sogou/bizdev/atlas/cpc/report/conf/struts-report.xml"></include>
+    <include file="com/sogou/bizdev/atlas/cpc/profile/conf/struts-profile.xml"></include>
+	<include file="com/sogou/bizdev/atlas/cpc/manage/conf/struts-manage.xml"></include>
+	<include file="com/sogou/bizdev/atlas/cpc/batch/conf/struts-batch.xml"></include>
+	<include file="com/sogou/bizdev/atlas/cpc/tools/estimator/conf/struts-estimate.xml"></include>
+	<include file="com/sogou/bizdev/atlas/cpc/tools/quality/conf/struts-quality.xml"></include>
+	<include file="com/sogou/bizdev/atlas/cpc/tools/ipexclusion/conf/struts-ipexclusion.xml"></include>
+	<include file="com/sogou/bizdev/atlas/cpc/tools/adlive/conf/struts-adlive.xml"></include>
+	<include file="com/sogou/bizdev/atlas/cpc/tools/tailorkeywordrecommand/conf/struts-keywordrecommend.xml"></include>
+	<include file="com/sogou/bizdev/atlas/cpc/analysis/conf/struts-analysis.xml"></include>
+	<include file="com/sogou/bizdev/atlas/cpc/fstclz/conf/struts-fstclz.xml"></include>
+	<include file="com/sogou/bizdev/atlas/cpc/tools/optlog/conf/struts-optlog.xml"></include>
+	<include file="com/sogou/bizdev/atlas/cpc/tools/recommendcase/conf/struts-recommendcase.xml"></include>
+	<include file="com/sogou/bizdev/atlas/cpc/tools/idearecommend/conf/struts-idearecom.xml"></include>
+	<include file="com/sogou/bizdev/atlas/pageguide/conf/struts-pageguide.xml"></include>
+	<include file="com/sogou/bizdev/atlas/cpc/statistic/conf/struts-statistic.xml"></include>
+	<include file="com/sogou/bizdev/atlas/cpc/mobile/optimize/conf/struts-mobileopt.xml"></include>
+    <include file="com/sogou/bizdev/atlas/cpc/deadlink/conf/struts-deadlink.xml"></include>
+    <include file="com/sogou/bizdev/atlas/cpc/knowledgecubic/conf/struts-cubic.xml"></include>
+    <include file="com/sogou/bizdev/atlas/cpc/knowledgecubic/conf/struts-cubicopt.xml"></include>
+    <include file="com/sogou/bizdev/atlas/cpc/tools/blockrule/conf/struts-blockrule.xml"></include>
+    <include file="com/sogou/bizdev/atlas/cpc/supercrown/conf/struts-supercrown.xml"></include>
+    <include file="com/sogou/bizdev/atlas/cpc/tools/newfeature/conf/struts-newfeature.xml"></include>
+	<include file="com/sogou/bizdev/atlas/cpc/onestation/conf/struts-onestation.xml"></include>
+    <include file="com/sogou/bizdev/atlas/cpc/grab/rank/conf/struts-grabrank.xml"></include>
+    <include file="com/sogou/bizdev/atlas/cpc/denykey/conf/struts-denykey.xml"></include>
+	<include file="com/sogou/bizdev/atlas/cpc/tools/remarket/conf/struts-remarket.xml"></include>
+	<include file="com/sogou/bizdev/atlas/cpc/notify/conf/struts-notify.xml"></include>
+	<include file="com/sogou/bizdev/atlas/cpc/labstyle/conf/struts-labstyle.xml"/>
+	<include file="com/sogou/bizdev/atlas/cpc/advancedstyle/suggestionstyle/conf/struts-suggestion.xml"></include>
+	<include file="com/sogou/bizdev/atlas/cpc/mobileapp/conf/struts-mobileapp.xml"></include>
+	<include file="com/sogou/bizdev/atlas/cpc/extrastyle/multipic/conf/struts-multipic.xml"></include>
+	<include file="com/sogou/bizdev/atlas/cpc/extrastyle/picshow/conf/struts-picshow.xml"></include>
+	<include file="com/sogou/bizdev/atlas/cpc/batchjob/conf/struts-batchjob.xml"></include>
+	<include file="com/sogou/bizdev/atlas/cpc/tools/offsitevisitorip/conf/struts-offsitevisitorip.xml"></include>
+</struts>

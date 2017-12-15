@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="hello" namespace="/hello" extends="my-default">
+
+		<action name="helloA" class="helloAction" method="helloA">
+			<result name="input" type="ajaxValidateError" />
+		</action>
+		<action name="helloB" class="helloAction" method="helloB">
+			<result name="input" type="ajaxValidateError" />
+		</action>
+		<action name="helloC" class="helloAction" method="helloC">
+			<result name="input" type="ajaxValidateError" />
+		</action>
+	</package>
+</struts>
