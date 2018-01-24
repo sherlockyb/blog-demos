@@ -3,12 +3,13 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.sherlockyb</groupId>
   <artifactId>blog-demos</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>blog-demos</name>
   <description>some code examples for blog</description>
   <modules>
     <module>struts2</module>
+    <module>jdk</module>
   </modules>
   
   <build>
